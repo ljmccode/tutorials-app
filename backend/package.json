@@ -1,5 +1,5 @@
 {
-  "name": "tutorialsmern",
+  "name": "frontend",
   "version": "1.0.0",
   "description": "Node.js Restful CRUD API with Node.js, Express, and MongoDB",
   "main": "server.js",
@@ -9,7 +9,7 @@
   "keywords": [
     "nodejs",
     "express",
-    "mongodb", 
+    "mongodb",
     "rest",
     "api"
   ],
