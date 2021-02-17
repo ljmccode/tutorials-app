@@ -1,5 +1,6 @@
 const Tutorial = require('../models/tutorial.model');
 
+// Create and Save a new Tutorial
 exports.create = (req, res) => {
     if (!req.body.title) {
         res.status(400).send({ message: 'Content can not be empty!'})
@@ -15,6 +16,7 @@ exports.create = (req, res) => {
 
     // Save tutorial
     tutorial
+        // inserts new document in database
         .save(tutorial)
         .then(data => {
             res.send(data);
@@ -22,7 +24,24 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || 'Some error occurred while creating the Tutorial'
+                    err.message || 'Some error occurred while creating the tutorial'
+            });
+        });
+};
+
+exports.findAll = (req, res) => {
+    const title = req.query.title;
+    // new RegExp(title) returns /<title>/
+    const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' }} : {};
+
+    Tutorial.find(condition)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || 'Some error occured while creating the tutorial'
             });
         });
 };
