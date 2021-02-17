@@ -14,7 +14,7 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true})); 
-app.use(tutorialRouter);
+app.use('/api/tutorials', tutorialRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`)
