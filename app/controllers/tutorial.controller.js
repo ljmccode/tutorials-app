@@ -46,6 +46,19 @@ exports.findAll = (req, res) => {
         });
 };
 
+// Find published tutorials
+exports.findAllPublished = (req, res) => {
+    Tutorial.find({ published: true})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: 'Error occurred retrieving tutorials'
+            });
+        });
+};
+
 // Find tutorial by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;

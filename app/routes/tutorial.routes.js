@@ -7,6 +7,9 @@ router.post('/', tutorials.create);
 // Get all tutorials
 router.get('/', tutorials.findAll);
 
+// Get all published tutorials
+router.get('/published', tutorials.findAllPublished);
+
 // Get tutorial with id
 router.get('/:id', tutorials.findOne);
 
