@@ -13,4 +13,7 @@ router.get('/:id', tutorials.findOne);
 // Update tutorial with id
 router.patch('/:id', tutorials.update);
 
+// Delete tutorial with id
+router.delete('/:id', tutorials.delete);
+
 module.exports = router;

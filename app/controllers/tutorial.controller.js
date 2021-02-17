@@ -3,7 +3,7 @@ const Tutorial = require('../models/tutorial.model');
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     if (!req.body.title) {
-        res.status(400).send({ message: 'Content can not be empty!'})
+        res.status(400).send({ message: 'Content can not be empty!' })
         return;
     }
 
@@ -23,8 +23,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || 'Some error occurred while creating the tutorial'
+                message: 'Some error occurred while creating the tutorial'
             });
         });
 };
@@ -34,7 +33,7 @@ exports.findAll = (req, res) => {
     const title = req.query.title;
     // if no title query, return all titles
     // new RegExp(title) returns /<title>/
-    const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' }} : {};
+    const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' } } : {};
 
     Tutorial.find(condition)
         .then(data => {
@@ -42,8 +41,7 @@ exports.findAll = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || 'Some error occured while creating the tutorial'
+                message: 'Some error occured while creating the tutorial'
             });
         });
 };
@@ -55,7 +53,7 @@ exports.findOne = (req, res) => {
     Tutorial.findById(id)
         .then(data => {
             if (!data) {
-                res.status(404).send({ message: `No tutorial found with id ${id}`})
+                res.status(404).send({ message: `No tutorial found with id ${id}` })
             } else {
                 res.send(data)
             }
@@ -69,7 +67,7 @@ exports.findOne = (req, res) => {
 
 // Update tutorial by ID
 exports.update = (req, res) => {
-    if(!req.body) {
+    if (!req.body) {
         return res.status(400).send({
             message: 'Data to update cannot be empty'
         })
@@ -77,19 +75,43 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     Tutorial.findByIdAndUpdate(id, req.body)
-        
+
         .then(data => {
             if (!data) {
                 res.status(404).send({
                     message: `Cannot update tutorial with id ${id}`
                 });
             } else {
-                res.send({ message: 'Tutorial was updated successfully'})
+                res.send({ message: 'Tutorial was updated successfully' })
             }
         })
         .catch(err => {
             res.status(500).send({
                 message: `Error occuring updating tutorial with id ${id}`
+            });
+        });
+};
+
+// Delete tutorial by ID
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Tutorial.findByIdAndRemove(id)
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Tutorial with ${id} not found`
+                });
+            } else {
+                res.send({
+                    message: 'Tutorial deleted successfully'
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error occured. Could not delete tutorial with id ${id}`
             });
         });
 };
