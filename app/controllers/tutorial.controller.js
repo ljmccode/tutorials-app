@@ -93,7 +93,6 @@ exports.update = (req, res) => {
 };
 
 // Delete tutorial by ID
-
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -112,6 +111,21 @@ exports.delete = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: `Error occured. Could not delete tutorial with id ${id}`
+            });
+        });
+};
+
+// Delete all tutorials
+exports.deleteAll = (req, res) => {
+    Tutorial.deleteMany({})
+        .then(data => {
+            res.send({
+                message: `${data.deletedCount} tutorials were successfully deleted`
+            });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error occurred removing tutorials`
             });
         });
 };

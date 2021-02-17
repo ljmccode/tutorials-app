@@ -16,4 +16,7 @@ router.patch('/:id', tutorials.update);
 // Delete tutorial with id
 router.delete('/:id', tutorials.delete);
 
+// Delete all tutorials
+router.delete('/', tutorials.deleteAll);
+
 module.exports = router;
