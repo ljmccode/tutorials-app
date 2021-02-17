@@ -31,6 +31,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const title = req.query.title;
+    // if no title query, return all titles
     // new RegExp(title) returns /<title>/
     const condition = title ? { title: { $regex: new RegExp(title), $options: 'i' }} : {};
 
@@ -45,3 +46,21 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
+exports.findOne = (req, res) => {
+    const id = req.params.id;
+
+    Tutorial.findById(id)
+        .then(data => {
+            if (!data) {
+                res.status(404).send({ message: `No tutorial found with id ${id}`})
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error retrieving tutorial with id ${id}`
+            })
+        })
+}
