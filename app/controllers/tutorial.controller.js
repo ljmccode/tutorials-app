@@ -29,6 +29,7 @@ exports.create = (req, res) => {
         });
 };
 
+// Find tutorial by condition or find all
 exports.findAll = (req, res) => {
     const title = req.query.title;
     // if no title query, return all titles
@@ -47,6 +48,7 @@ exports.findAll = (req, res) => {
         });
 };
 
+// Find tutorial by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -64,3 +66,30 @@ exports.findOne = (req, res) => {
             })
         })
 }
+
+// Update tutorial by ID
+exports.update = (req, res) => {
+    if(!req.body) {
+        return res.status(400).send({
+            message: 'Data to update cannot be empty'
+        })
+    }
+    const id = req.params.id;
+
+    Tutorial.findByIdAndUpdate(id, req.body)
+        
+        .then(data => {
+            if (!data) {
+                res.status(404).send({
+                    message: `Cannot update tutorial with id ${id}`
+                });
+            } else {
+                res.send({ message: 'Tutorial was updated successfully'})
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error occuring updating tutorial with id ${id}`
+            });
+        });
+};

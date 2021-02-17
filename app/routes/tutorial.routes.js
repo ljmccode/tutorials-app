@@ -10,4 +10,7 @@ router.get('/', tutorials.findAll);
 // Get tutorial with id
 router.get('/:id', tutorials.findOne);
 
+// Update tutorial with id
+router.patch('/:id', tutorials.update);
+
 module.exports = router;
